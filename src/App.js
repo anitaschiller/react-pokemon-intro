@@ -26,10 +26,16 @@ function App() {
   }
 
   function removePokemon(name) {
-    const updatedPokeMons = pokemon.filter((pokemon) => pokemon.name !== name);
-    setPokemon([...updatedPokeMons]);
+    const updatedPokemons = pokemon.filter((pokemon) => pokemon.name !== name);
+    setPokemon([...updatedPokemons]);
   }
 
+  function setFree(name) {
+    const pokemonsToKeep = pokedex.filter((pokemon) => pokemon.name !== name);
+    setPokedex([...pokemonsToKeep]);
+    const pokemonToAdd = pokedex.find((pokemon) => pokemon.name === name);
+    setPokemon([...pokemon, pokemonToAdd]);
+  }
   return (
     <div>
       <h1>Pokemon App</h1>
@@ -37,7 +43,11 @@ function App() {
         <PokeballHeader count={pokedex.length} />
         <div className="flexbox">
           {pokedex.map((pokemon) => (
-            <Pokeball name={pokemon.name} type={pokemon.type} />
+            <Pokeball
+              name={pokemon.name}
+              type={pokemon.type}
+              onSetFree={setFree}
+            />
           ))}
         </div>
       </section>
